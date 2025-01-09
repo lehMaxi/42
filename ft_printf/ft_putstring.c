@@ -1,13 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stringput.c                                     :+:      :+:    :+:   */
+/*   ft_putstring.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlehmann <mlehmann@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 12:47:41 by mlehmann          #+#    #+#             */
-/*   Updated: 2024/12/12 13:30:46 by mlehmann         ###   ########.fr       */
+/*   Created: 2025/01/09 10:53:01 by mlehmann          #+#    #+#             */
+/*   Updated: 2025/01/09 11:00:24 by mlehmann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
 
+int	ft_putstring(char *str)
+{
+	int	i;
+	int	control;
+
+	control = 0;
+	i = 0;
+	while (str && str[i])
+	{
+		control += ft_putchar((int)str[i]);
+		i++;
+		if (control < 0)
+			return (control);
+		control = 0;
+	}
+	return (i);
+}
