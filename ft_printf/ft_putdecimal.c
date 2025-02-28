@@ -6,7 +6,7 @@
 /*   By: mlehmann <mlehmann@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:08:10 by mlehmann          #+#    #+#             */
-/*   Updated: 2025/01/09 13:12:44 by mlehmann         ###   ########.fr       */
+/*   Updated: 2025/01/09 14:50:17 by mlehmann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_putlong(unsigned int i)
 	return (control);
 }
 
-int	numlen (int i, unsigned int u)
+int	numlen(int i, unsigned int u)
 {
 	unsigned int	num;
 	unsigned int	len;
@@ -71,7 +71,7 @@ int	numlen (int i, unsigned int u)
 	return (len);
 }
 
-int 	ft_putdecimal(int i, unsigned int u)
+int	ft_putdecimal(int i, unsigned int u)
 {
 	int	control;
 

@@ -6,13 +6,13 @@
 /*   By: mlehmann <mlehmann@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 13:13:40 by mlehmann          #+#    #+#             */
-/*   Updated: 2025/01/09 13:32:12 by mlehmann         ###   ########.fr       */
+/*   Updated: 2025/01/09 14:53:38 by mlehmann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	hexlen (unsigned int u)
+int	hexlen(unsigned int u)
 {
 	unsigned int	num;
 	unsigned int	len;
@@ -33,6 +33,7 @@ int	ft_puthex(unsigned int i, char c)
 {
 	int	control;
 
+	control = 0;
 	if (i > 15)
 		control = ft_puthex(i / 16, c);
 	if (control < 0)

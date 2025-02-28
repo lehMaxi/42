@@ -6,49 +6,60 @@
 /*   By: mlehmann <mlehmann@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:43:33 by mlehmann          #+#    #+#             */
-/*   Updated: 2025/01/06 12:56:05 by mlehmann         ###   ########.fr       */
+/*   Updated: 2025/01/13 15:02:55 by mlehmann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	call_sort(char %, va_list *arg)
+int	call_sort(char c, va_list arg)
 {
-	if (% == 'c')
-		ft_putchar(va_arg(arg, char));
-	else if (% == 's')
-		ft_putstring(va_arg(arg, char*));
-	else if (% == 'p')
-		ft_putpointer(va_arg(arg, void*));
-	else if (% == 'd' || % == 'i')
-		ft_putdecimal(va_arg(arg, int), 0);
-	else if (% == 'u')
-		ft_putdecimal(0, va_arg(arg, unsigned int));
-	else if (% == 'x')
-		ft_puthex(va_arg(arg, int), 'x');
-	else if (% == 'X')
-		ft_puthex(va_arg(arg, int), 'X');
-	else if (% == '%')
-		ft_putchar('%');
+	int	control;
+
+	control = 0;
+	if (c == 'c')
+		control = ft_putchar(va_arg(arg, int));
+	else if (c == 's')
+		control = ft_putstring(va_arg(arg, char *));
+	else if (c == 'p')
+		control = ft_putpointer(va_arg(arg, void *));
+	else if (c == 'd' || c == 'i')
+		control = ft_putdecimal(va_arg(arg, int), 0);
+	else if (c == 'u')
+		control = ft_putdecimal(0, va_arg(arg, unsigned int));
+	else if (c == 'x')
+		control = ft_puthex(va_arg(arg, int), 'x');
+	else if (c == 'X')
+		control = ft_puthex(va_arg(arg, int), 'X');
+	else if (c == '%')
+		control = ft_putchar('%');
+	return (control);
 }
 
 int	ft_printf(const char *str, ...)
 {
-	int	i;
+	int		i;
 	va_list	ap;
+	int		control;
 
 	i = 0;
 	va_start(ap, str);
-	while (str[i])
+	while (*str)
 	{
-		if (str[i] != '%')
+		if (*str != '%')
 		{
-			ft_putchar(str[i]);
-			i++;
+			control = ft_putchar(*str);
+			str++;
 		}
 		else
 		{
-			call_sort(str[i+1], *ap);
+			control = call_sort(*(str + 1), ap);
+			str += 2;
 		}
+		if (control < 0)
+			return (control);
+		i += control;
 	}
+	va_end(ap);
+	return (i);
 }

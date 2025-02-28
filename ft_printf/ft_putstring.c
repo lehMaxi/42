@@ -6,7 +6,7 @@
 /*   By: mlehmann <mlehmann@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 10:53:01 by mlehmann          #+#    #+#             */
-/*   Updated: 2025/01/09 11:00:24 by mlehmann         ###   ########.fr       */
+/*   Updated: 2025/01/21 12:39:20 by mlehmann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,18 @@ int	ft_putstring(char *str)
 
 	control = 0;
 	i = 0;
-	while (str && str[i])
+	if (!str)
+		i = ft_putstring("(null)");
+	else
 	{
-		control += ft_putchar((int)str[i]);
-		i++;
-		if (control < 0)
-			return (control);
-		control = 0;
+		while (str && str[i])
+		{
+			control += ft_putchar((int)str[i]);
+			i++;
+			if (control < 0)
+				return (control);
+			control = 0;
+		}
 	}
 	return (i);
 }
