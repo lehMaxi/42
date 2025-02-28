@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   1get_next_line.c                                   :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlehmann <mlehmann@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:44:41 by mlehmann          #+#    #+#             */
-/*   Updated: 2025/02/07 13:14:49 by mlehmann         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:12:23 by mlehmann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,23 @@ char	*hold_the_next_line(char *line)
 
 char	*get_next_line(int fd)
 {
-	static char	*next;
+	static char	*next[1000];
 	char		*line;
 	char		*get;
 
+	if (fd >= 1000)
+		return (NULL);
 	get = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		free(next);
+		free(next[fd]);
 		free(get);
 		return (NULL);
 	}
 	if (!get)
 		return (NULL);
-	line = fill_this_line(fd, next, get);
+	line = fill_this_line(fd, next[fd], get);
 	free(get);
-	next = hold_the_next_line(line);
+	next[fd] = hold_the_next_line(line);
 	return (line);
 }
