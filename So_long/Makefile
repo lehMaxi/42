@@ -6,18 +6,18 @@
 #    By: mlehmann <mlehmann@student.42berlin.d      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/26 11:14:24 by mlehmann          #+#    #+#              #
-#    Updated: 2025/03/05 13:37:14 by mlehmann         ###   ########.fr        #
+#    Updated: 2025/03/10 14:06:44 by mlehmann         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = play_me
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 LFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -Llibft -lft
 CC = cc
 INCLUDE = -I/usr/include -Imlx_linux -Ilibft -I./
 MLX = ./mlx_linux/mlx_Linux.a
 LIB = ./libft/libft.a
-SOURCE = play.c image_handling.c
+SOURCE = play.c image_handling.c utils.c rapture.c
 OBJECT = $(SOURCE:.c=.o)
 
 all: $(NAME)
@@ -40,8 +40,8 @@ clean:
 
 fclean:
 	rm -f $(NAME)
-	fclean ./libft
-	clean ./mlx_linux
+	make fclean ./libft
+	make clean ./mlx_linux
 
 re: fclean all
 

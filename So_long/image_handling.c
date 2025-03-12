@@ -6,27 +6,24 @@
 /*   By: mlehmann <mlehmann@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 12:23:59 by mlehmann          #+#    #+#             */
-/*   Updated: 2025/03/05 13:34:44 by mlehmann         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:35:14 by mlehmann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "how_long.h"
 
-int	imp(int num)
+void	asign_names(picture (*stoc)[3][3])
 {
-	int	i;
-
-	i = 1;
-	if (num < 0)
-		return (0);
-	if (num / 10 > 0)
-	{
-		i + imp(num / 10);
-	}
-	return (i);
+	stoc[0][0]->addr = ft_strjoin(stoc[0][0]->addr, "gras_0.xpm");
+	stoc[1][0]->addr = ft_strjoin(stoc[1][0]->addr, "player_0.xpm");
+	stoc[2][0]->addr = ft_strjoin(stoc[2][0]->addr, "trees_0.xpm");
+//	stoc[3][0]->addr = ft_strjoin(stoc[3][0]->addr, "collectible_0.xpm");
+//	stoc[4][0]->addr = ft_strjoin(stoc[4][0]->addr, "entrance_0.xpm");
+//	stoc[5][0]->addr = ft_strjoin(stoc[5][0]->addr, "exit_0.xpm");
+//	stoc[6][0]->addr = ft_strjoin(stoc[6][0]->addr, "enemy_0.xpm");
 }
 
-void	complete_address(picture **stoc, int size)
+void	complete_address(picture (*stoc)[3][3], int size[2])
 {
 	int	i;
 	int	j;
@@ -35,21 +32,17 @@ void	complete_address(picture **stoc, int size)
 
 	i = 0;
 	j = 1;
-	type = ".png"
-	ft_strlcat(stoc[0][0]->addr, "gras_0.png",
-			ft_strlen(stoc[0][0]->addr) + 15);
-	ft_strlcat(stoc[1][0]->addr, "player_0.png",
-			ft_strlen(stoc[1][0]->addr) + 15);
-	ft_strlcat(stoc[2][0]->addr, "trees_0.png",
-			ft_strlen(stoc[2][0]->addr) + 15);
-	while (i < size)
+	type = ".xpm";
+	while (i < size[0])
 	{
-		while (j < size)
+		while (j < size[1])
 		{
-			ft_strlcpy(stoc[i][j]->addr,stoc[i][j - 1]->addr, ft_strlen(stoc[i][j - 1]->addr) - (4 + imp(j));
-			num = itoa(j);
-			ft_strlcat(num, type, 5 + imp(j));
-			ft_strlcat(stoc[i][j]->addr, num,ft_strlen(stoc[i][j]->addr) + 5 + imp(j));
+			stoc[i][j]->addr = ft_substr(stoc[i][j - 1]->addr,
+				       	0, ft_strlen(stoc[i][j - 1]->addr)
+				       	- (4 + imp(j)));
+			num = ft_itoa(j);
+			num = ft_strjoin(num, type);
+			stoc[i][j]->addr = ft_strjoin(stoc[i][j]->addr, num);
 			free(num);
 			j++;
 		}
@@ -58,16 +51,46 @@ void	complete_address(picture **stoc, int size)
 	}
 }
 
-void	image_init(void *con, picture **stoc, int size, int dim)
+void	image_loader(handler *hand, picture (*stoc)[3][3],
+	       	int size[2], int img_size)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	while(i < size)
+	j = 0;
+	while (i < size[0])
 	{
-		stoc[i][0]->addr = "./resources/";
+		while (j < size[1])
+		{
+			stoc[i][j]->bpp = 0;
+			stoc[i][j]->li_len = 0;
+			stoc[i][j]->endian = 0;
+			stoc[i][j]->sides = img_size;
+			stoc[i][j]->img = NULL;
+			stoc[i][j]->img = mlx_xpm_file_to_image(hand->con, stoc[i][j]->addr, &img_size, &img_size);
+			img_size = stoc[i][j]->sides;
+			j++;
+		}
+		j = 0;
 		i++;
 	}
-	complete_address(con, stoc, size)
-	//squaer the whole thing, its fine
+}
+
+void	image_init(handler *hand, picture (*stoc)[3][3], int size[2], int d)
+{
+	int	i;
+	int	img_size;
+
+	img_size = d;
+	i = 0;
+	while(i < size[0])
+	{
+		stoc[i][0]->addr = ft_strdup("./resources/");
+		i++;
+	}
+	asign_names(stoc);
+	complete_address(stoc, size);
+	image_loader(hand, stoc, size, img_size);
+	//square the whole thing, its fine
 }
